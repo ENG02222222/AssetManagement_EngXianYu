@@ -1,7 +1,7 @@
 <template>
   <div class="details-container">
     <Navbar />
-
+    
     <div class="content">
       <button class="back-btn" @click="$router.push('/assets')">← Back to Assets</button>
 
@@ -82,7 +82,7 @@ function getStatusClass(status) {
 
 async function deleteAsset() {
   if (!confirm("Are you sure you want to delete this asset?")) return;
-
+  
   try {
     await axios.delete(`${API_BASE_URL}/api/assets/${asset.value.id}`);
     alert("Asset deleted successfully!");

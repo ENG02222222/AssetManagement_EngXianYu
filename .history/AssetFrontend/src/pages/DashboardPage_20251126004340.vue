@@ -178,7 +178,7 @@ const chartOptions = {
 
 onMounted(async () => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/api/dashboard`);
+    const res = await axios.get("http://localhost:5011/api/dashboard");
     if (res && res.data) stats.value = res.data;
   } catch (err) {
     console.error("Dashboard Error:", err);

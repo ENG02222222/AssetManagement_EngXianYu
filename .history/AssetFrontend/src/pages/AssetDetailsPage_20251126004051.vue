@@ -1,7 +1,7 @@
 <template>
   <div class="details-container">
     <Navbar />
-
+    
     <div class="content">
       <button class="back-btn" @click="$router.push('/assets')">← Back to Assets</button>
 
@@ -82,9 +82,9 @@ function getStatusClass(status) {
 
 async function deleteAsset() {
   if (!confirm("Are you sure you want to delete this asset?")) return;
-
+  
   try {
-    await axios.delete(`${API_BASE_URL}/api/assets/${asset.value.id}`);
+    await axios.delete(`http://localhost:5011/api/assets/${asset.value.id}`);
     alert("Asset deleted successfully!");
     router.push("/assets");
   } catch (err) {
@@ -96,7 +96,7 @@ async function deleteAsset() {
 onMounted(async () => {
   try {
     const id = route.params.id;
-    const res = await axios.get(`${API_BASE_URL}/api/assets/${id}`);
+    const res = await axios.get(`http://localhost:5011/api/assets/${id}`);
     asset.value = res.data;
   } catch (err) {
     console.error("Error loading asset:", err);

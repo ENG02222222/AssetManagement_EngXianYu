@@ -1,7 +1,7 @@
 <template>
   <div class="tickets-container">
     <Navbar />
-
+    
     <div class="content">
       <div class="header">
         <h1>IT Support Tickets</h1>
@@ -18,8 +18,12 @@
       <div class="search-container">
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input v-model="searchQuery" type="text" placeholder="Search by title, description, or status..."
-            class="search-input" />
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="Search by title, description, or status..." 
+            class="search-input"
+          />
           <button v-if="searchQuery" @click="searchQuery = ''" class="clear-inside-btn">✕</button>
         </div>
       </div>
@@ -60,8 +64,12 @@
 
           <div class="form-group">
             <label>Description *</label>
-            <textarea v-model="newTicket.description" placeholder="Detailed description of the issue..." rows="4"
-              required></textarea>
+            <textarea 
+              v-model="newTicket.description" 
+              placeholder="Detailed description of the issue..."
+              rows="4"
+              required
+            ></textarea>
           </div>
 
           <div v-if="role === 'Admin' && editMode" class="form-group">
@@ -76,8 +84,11 @@
 
           <div v-if="role === 'Admin' && editMode" class="form-group">
             <label>Admin Notes</label>
-            <textarea v-model="newTicket.adminNotes" placeholder="Internal notes or resolution details..."
-              rows="3"></textarea>
+            <textarea 
+              v-model="newTicket.adminNotes" 
+              placeholder="Internal notes or resolution details..."
+              rows="3"
+            ></textarea>
           </div>
 
           <div class="form-actions">
@@ -112,7 +123,7 @@
           <tbody>
             <tr v-if="filteredTickets.length === 0">
               <td colspan="8" style="text-align:center; padding: 40px;">
-  {{ searchQuery ? 'No tickets found matching your search.' : 'No tickets yet. Click "New Ticket" to submit one.' }}
+                {{ searchQuery ? 'No tickets found matching your search.' : 'No tickets yet. Click "New Ticket" to submit one.' }}
               </td>
             </tr>
             <tr v-for="ticket in filteredTickets" :key="ticket.id">
@@ -134,11 +145,14 @@
               <td data-label="Actions">
                 <div class="action-buttons">
                   <button class="btn-view" @click="viewTicket(ticket)">View</button>
-                  <button v-if="role === 'Admin' || ticket.submittedBy === username" class="btn-edit"
-                    @click="startEdit(ticket)">
+                  <button v-if="role === 'Admin' || ticket.submittedBy === username" 
+                          class="btn-edit" 
+                          @click="startEdit(ticket)">
                     Edit
                   </button>
-                  <button v-if="role === 'Admin'" class="btn-delete" @click="deleteTicket(ticket.id)">
+                  <button v-if="role === 'Admin'" 
+                          class="btn-delete" 
+                          @click="deleteTicket(ticket.id)">
                     Delete
                   </button>
                 </div>
@@ -155,7 +169,7 @@
 import Navbar from "../components/Navbar.vue";
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
-import { API_BASE_URL } from "../config/api.js";
+
 
 const role = localStorage.getItem("role");
 const username = localStorage.getItem("username");
@@ -176,7 +190,7 @@ const newTicket = ref({
 
 const filteredTickets = computed(() => {
   if (!searchQuery.value) return tickets.value;
-
+  
   const query = searchQuery.value.toLowerCase();
   return tickets.value.filter(ticket => {
     return (
@@ -232,7 +246,7 @@ function startEdit(ticket) {
   editMode.value = true;
   showForm.value = true;
   editTicketId.value = ticket.id;
-
+  
   newTicket.value = {
     title: ticket.title,
     category: ticket.category,
@@ -262,15 +276,15 @@ async function createTicket() {
     alert("Title and description are required!");
     return;
   }
-
+  
   try {
     const ticketData = {
       ...newTicket.value,
       submittedBy: username,
       status: "Open"
     };
-
-    await axios.post(`${API_BASE_URL}/api/tickets`, ticketData);
+    
+    await axios.post("http://localhost:5011/api/tickets", ticketData);
     alert("Ticket submitted successfully!");
     cancelForm();
     await loadTickets();
@@ -285,9 +299,9 @@ async function updateTicket() {
     alert("Title and description are required!");
     return;
   }
-
+  
   try {
-    await axios.put(`${API_BASE_URL}/api/tickets/${editTicketId.value}`, newTicket.value);
+    await axios.put(`http://localhost:5011/api/tickets/${editTicketId.value}`, newTicket.value);
     alert("Ticket updated successfully!");
     cancelForm();
     await loadTickets();
@@ -299,9 +313,9 @@ async function updateTicket() {
 
 async function deleteTicket(id) {
   if (!confirm("Are you sure you want to delete this ticket?")) return;
-
+  
   try {
-    await axios.delete(`${API_BASE_URL}/api/tickets/${id}`);
+    await axios.delete(`http://localhost:5011/api/tickets/${id}`);
     alert("Ticket deleted successfully!");
     await loadTickets();
   } catch (err) {
@@ -312,7 +326,7 @@ async function deleteTicket(id) {
 
 async function loadTickets() {
   try {
-    const res = await axios.get(`${API_BASE_URL}/api/tickets`);
+    const res = await axios.get("http://localhost:5011/api/tickets");
     tickets.value = res.data;
   } catch (err) {
     console.error("Error loading tickets:", err);
@@ -321,10 +335,10 @@ async function loadTickets() {
 
 async function exportExcel() {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/tickets/export`, {
+    const response = await axios.get("http://localhost:5011/api/tickets/export", {
       responseType: 'blob'
     });
-
+    
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = url;

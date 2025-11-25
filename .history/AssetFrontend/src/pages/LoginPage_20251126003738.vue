@@ -29,7 +29,7 @@ const error = ref("");
 
 async function login() {
   try {
-    const res = await axios.post(`${API_BASE_URL}/api/login`, {
+    const res = await axios.post("http://localhost:5011/api/login", {
       username: username.value,
       password: password.value,
     });

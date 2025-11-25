@@ -112,7 +112,8 @@
           <tbody>
             <tr v-if="filteredTickets.length === 0">
               <td colspan="8" style="text-align:center; padding: 40px;">
-  {{ searchQuery ? 'No tickets found matching your search.' : 'No tickets yet. Click "New Ticket" to submit one.' }}
+                {{ searchQuery ? 'No tickets found matching your search.' : 'No tickets yet. Click "New Ticket" to
+                submit one.' }}
               </td>
             </tr>
             <tr v-for="ticket in filteredTickets" :key="ticket.id">
