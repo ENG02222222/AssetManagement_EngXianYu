@@ -22,28 +22,19 @@ BEGIN
 END
 GO
 
--- Insert sample data into Assets
-INSERT INTO Assets (Id, Name, Category, AssignedTo, Status, PurchaseDate)
-VALUES
-(1, 'Mandy', 'Laptop', 'John', 'Active', '2024-01-01 00:00:00.000'),
-(5, 'David', 'Chair', 'Mary', 'Repair', '2025-11-14 00:00:00.000');
-GO
-
---------------------------------------------------------------------------------------------------------------------------
-
 -- Create Tickets Table
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Tickets')
 BEGIN
     CREATE TABLE Tickets (
-        Id INT PRIMARY KEY IDENTITY(1,1),
+        Id INT PRIMARY KEY,
         Title NVARCHAR(255) NOT NULL,
         Category NVARCHAR(100),
         Priority NVARCHAR(50),
         Description NVARCHAR(MAX) NOT NULL,
-        Status NVARCHAR(50) DEFAULT 'Open',
+        Status NVARCHAR(50),
         SubmittedBy NVARCHAR(100),
         AdminNotes NVARCHAR(MAX),
-        CreatedAt DATETIME2 DEFAULT GETDATE()
+        CreatedAt DATETIME2
     );
 END
 GO

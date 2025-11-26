@@ -21,7 +21,6 @@ BEGIN
     );
 END
 GO
-
 -- Insert sample data into Assets
 INSERT INTO Assets (Id, Name, Category, AssignedTo, Status, PurchaseDate)
 VALUES
@@ -30,7 +29,6 @@ VALUES
 GO
 
 --------------------------------------------------------------------------------------------------------------------------
-
 -- Create Tickets Table
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Tickets')
 BEGIN

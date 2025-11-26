@@ -22,15 +22,6 @@ BEGIN
 END
 GO
 
--- Insert sample data into Assets
-INSERT INTO Assets (Id, Name, Category, AssignedTo, Status, PurchaseDate)
-VALUES
-(1, 'Mandy', 'Laptop', 'John', 'Active', '2024-01-01 00:00:00.000'),
-(5, 'David', 'Chair', 'Mary', 'Repair', '2025-11-14 00:00:00.000');
-GO
-
---------------------------------------------------------------------------------------------------------------------------
-
 -- Create Tickets Table
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Tickets')
 BEGIN
@@ -46,6 +37,13 @@ BEGIN
         CreatedAt DATETIME2 DEFAULT GETDATE()
     );
 END
+GO
+
+-- Insert sample data into Assets
+INSERT INTO Assets (Id, Name, Category, AssignedTo, Status, PurchaseDate)
+VALUES
+(1, 'Mandy', 'Laptop', 'John', 'Active', '2024-01-01 00:00:00.000'),
+(5, 'David', 'Chair', 'Mary', 'Repair', '2025-11-14 00:00:00.000');
 GO
 
 -- Insert all tickets

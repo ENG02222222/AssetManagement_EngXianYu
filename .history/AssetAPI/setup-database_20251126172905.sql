@@ -21,7 +21,6 @@ BEGIN
     );
 END
 GO
-
 -- Insert sample data into Assets
 INSERT INTO Assets (Id, Name, Category, AssignedTo, Status, PurchaseDate)
 VALUES
