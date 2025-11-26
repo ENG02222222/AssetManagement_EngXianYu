@@ -72,3 +72,4 @@ C:\xampp\htdocs\final\AssetSolution\AssetAPI\obj\Debug\net6.0\refint\AssetAPI.dl
 C:\xampp\htdocs\final\AssetSolution\AssetAPI\obj\Debug\net6.0\AssetAPI.pdb
 C:\xampp\htdocs\final\AssetSolution\AssetAPI\obj\Debug\net6.0\AssetAPI.genruntimeconfig.cache
 C:\xampp\htdocs\final\AssetSolution\AssetAPI\obj\Debug\net6.0\ref\AssetAPI.dll
+C:\xampp\htdocs\final\AssetSolution\AssetAPI\bin\Debug\net6.0\appsettings.Example.json

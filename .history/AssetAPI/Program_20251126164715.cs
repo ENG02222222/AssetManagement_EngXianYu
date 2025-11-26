@@ -10,7 +10,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? "Server=localhost\\SQLEXPRESS;Database=AssetDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // ===== CORS =====
 builder.Services.AddCors(options =>
@@ -20,11 +21,6 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated(); // Creates DB if it doesn't exist
-}
 app.UseCors("AllowLocal");
 
 // ========== AUTH LOGIN (HARDCODED) ==========
